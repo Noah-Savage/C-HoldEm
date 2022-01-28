@@ -1,0 +1,562 @@
+
+using System;
+
+namespace CSharpHoldEm
+{
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+
+            Console.WriteLine("Welcome to C# Hold 'Em! \nReady to play?");
+            string startAnswer = Console.ReadLine();
+
+
+            //Wait until user responds with something with letter Y indicating yep, yup, yes, etc
+            while (!startAnswer.Contains('y'))
+            {
+                Console.WriteLine("No worries! Let me know when you're ready!");
+                startAnswer = Console.ReadLine();
+            }
+
+
+            Console.WriteLine("Great! Let's play!");
+
+            string playAgain = "yes";
+
+            while (playAgain.Contains("y"))
+            {
+
+                Double playerBalance = 100;
+
+                Console.WriteLine("How much do you want to bet? \nAvailable balance: " + playerBalance.ToString());
+
+                string playerBetString = Console.ReadLine();
+                double playerBet = 0;
+
+                //Make sure the bet being placed is a valid double
+                while (!Double.TryParse(playerBetString, out playerBet))
+                {
+                    Console.WriteLine("Not a valid bet! Try again! \nAvailable balance: " + playerBalance.ToString());
+                    playerBetString = Console.ReadLine();
+                }
+                while (playerBet > playerBalance)
+                {
+                    Console.WriteLine("Not enough tokens! Try again! \nAvailable balance: " + playerBalance.ToString());
+                    playerBetString = Console.ReadLine();
+                    while (!Double.TryParse(playerBetString, out playerBet))
+                    {
+                        Console.WriteLine("Not a valid response! Try again! \nAvailable balance: " + playerBalance.ToString());
+                        playerBetString = Console.ReadLine();
+                    }
+                }
+
+                int raiseCount = 0;
+
+
+                playerBalance -= playerBet;
+
+
+                //Create the deck to be filled
+                Card[] theDeck = new Card[52];
+
+                //Create all hearts
+                Card twoHeart = new Card("Hearts", 2, false);
+                Card threeHeart = new Card("Hearts", 3, false);
+                Card fourHeart = new Card("Hearts", 4, false);
+                Card fiveHeart = new Card("Hearts", 5, false);
+                Card sixHeart = new Card("Hearts", 6, false);
+                Card sevenHeart = new Card("Hearts", 7, false);
+                Card eightHeart = new Card("Hearts", 8, false);
+                Card nineHeart = new Card("Hearts", 9, false);
+                Card tenHeart = new Card("Hearts", 10, false);
+                Card jackHeart = new Card("Hearts", 11, false);
+                Card queenHeart = new Card("Hearts", 12, false);
+                Card kingHeart = new Card("Hearts", 13, false);
+                Card aceHeart = new Card("Hearts", 14, false);
+
+                //Create all spade cards
+                Card twoSpade = new Card("Spades", 2, false);
+                Card threeSpade = new Card("Spades", 3, false);
+                Card fourSpade = new Card("Spades", 4, false);
+                Card fiveSpade = new Card("Spades", 5, false);
+                Card sixSpade = new Card("Spades", 6, false);
+                Card sevenSpade = new Card("Spades", 7, false);
+                Card eightSpade = new Card("Spades", 8, false);
+                Card nineSpade = new Card("Spades", 9, false);
+                Card tenSpade = new Card("Spades", 10, false);
+                Card jackSpade = new Card("Spades", 11, false);
+                Card queenSpade = new Card("Spades", 12, false);
+                Card kingSpade = new Card("Spades", 13, false);
+                Card aceSpade = new Card("Spades", 14, false);
+
+                //Create all diamond cards
+                Card twoDiamond = new Card("Diamonds", 2, false);
+                Card threeDiamond = new Card("Diamonds", 3, false);
+                Card fourDiamond = new Card("Diamonds", 4, false);
+                Card fiveDiamond = new Card("Diamonds", 5, false);
+                Card sixDiamond = new Card("Diamonds", 6, false);
+                Card sevenDiamond = new Card("Diamonds", 7, false);
+                Card eightDiamond = new Card("Diamonds", 8, false);
+                Card nineDiamond = new Card("Diamonds", 9, false);
+                Card tenDiamond = new Card("Diamonds", 10, false);
+                Card jackDiamond = new Card("Diamonds", 11, false);
+                Card queenDiamond = new Card("Diamonds", 12, false);
+                Card kingDiamond = new Card("Diamonds", 13, false);
+                Card aceDiamond = new Card("Diamonds", 14, false);
+
+                //Create all club cards
+                Card twoClub = new Card("Clubs", 2, false);
+                Card threeClub = new Card("Clubs", 3, false);
+                Card fourClub = new Card("Clubs", 4, false);
+                Card fiveClub = new Card("Clubs", 5, false);
+                Card sixClub = new Card("Clubs", 6, false);
+                Card sevenClub = new Card("Clubs", 7, false);
+                Card eightClub = new Card("Clubs", 8, false);
+                Card nineClub = new Card("Clubs", 9, false);
+                Card tenClub = new Card("Clubs", 10, false);
+                Card jackClub = new Card("Clubs", 11, false);
+                Card queenClub = new Card("Clubs", 12, false);
+                Card kingClub = new Card("Clubs", 13, false);
+                Card aceClub = new Card("Clubs", 14, false);
+
+                //Time to put them in the deck!
+                theDeck[0] = twoHeart;
+                theDeck[1] = threeHeart;
+                theDeck[2] = fourHeart;
+                theDeck[3] = fiveHeart;
+                theDeck[4] = sixHeart;
+                theDeck[5] = sevenHeart;
+                theDeck[6] = eightHeart;
+                theDeck[7] = nineHeart;
+                theDeck[8] = tenHeart;
+                theDeck[9] = jackHeart;
+                theDeck[10] = queenHeart;
+                theDeck[11] = kingHeart;
+                theDeck[12] = aceHeart;
+                theDeck[13] = twoSpade;
+                theDeck[14] = threeSpade;
+                theDeck[15] = fourSpade;
+                theDeck[16] = fiveSpade;
+                theDeck[17] = sixSpade;
+                theDeck[18] = sevenSpade;
+                theDeck[19] = eightSpade;
+                theDeck[20] = nineSpade;
+                theDeck[21] = tenSpade;
+                theDeck[22] = jackSpade;
+                theDeck[23] = queenSpade;
+                theDeck[24] = kingSpade;
+                theDeck[25] = aceSpade;
+                theDeck[26] = twoDiamond;
+                theDeck[27] = threeDiamond;
+                theDeck[28] = fourDiamond;
+                theDeck[29] = fiveDiamond;
+                theDeck[30] = sixDiamond;
+                theDeck[31] = sevenDiamond;
+                theDeck[32] = eightDiamond;
+                theDeck[33] = nineDiamond;
+                theDeck[34] = tenDiamond;
+                theDeck[35] = jackDiamond;
+                theDeck[36] = queenDiamond;
+                theDeck[37] = kingDiamond;
+                theDeck[38] = aceDiamond;
+                theDeck[39] = twoClub;
+                theDeck[40] = threeClub;
+                theDeck[41] = fourClub;
+                theDeck[42] = fiveClub;
+                theDeck[43] = sixClub;
+                theDeck[44] = sevenClub;
+                theDeck[45] = eightClub;
+                theDeck[46] = nineClub;
+                theDeck[47] = tenClub;
+                theDeck[48] = jackClub;
+                theDeck[49] = queenClub;
+                theDeck[50] = kingClub;
+                theDeck[51] = aceClub;
+
+                var rand = new Random();
+
+                Card[] playerHand = new Card[7];
+
+                Card[] dealerHand = new Card[7];
+
+                Card[] tableCards = new Card[9];
+
+                Card[] pubCards = new Card[5];
+
+                //Generate player/dealer cards and set their isUsed
+                //function to prevent duplicates
+                playerHand[0] = theDeck[rand.Next(theDeck.Length - 1)];
+
+                foreach (var deckCard in theDeck)
+                {
+                    deckCard.isUsed = false;
+                }
+
+                if (theDeck.SingleOrDefault(d => d == playerHand[0]) is Card card)
+                    card.isUsed = true;
+
+
+                for (int i = 0; i < theDeck.Length; i++)
+                {
+                    if (theDeck[i].Equals(playerHand[0]))
+                    {
+                        theDeck[i].isUsed = true;
+                        break;
+                    }
+                }
+                tableCards[0] = playerHand[0];
+
+                playerHand[1] = theDeck[rand.Next(theDeck.Length - 1)];
+                while (playerHand[1].isUsed.Equals(true))
+                {
+                    playerHand[1] = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                playerHand[1].isUsed = true;
+                tableCards[1] = playerHand[1];
+
+                dealerHand[0] = theDeck[rand.Next(theDeck.Length - 1)];
+                while (dealerHand[0].isUsed.Equals(true))
+                {
+                    dealerHand[0] = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                dealerHand[0].isUsed = true;
+                tableCards[2] = dealerHand[0];
+
+                dealerHand[1] = theDeck[rand.Next(theDeck.Length - 1)];
+                while (dealerHand[1].isUsed.Equals(true))
+                {
+                    dealerHand[1] = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                dealerHand[1].isUsed = true;
+                tableCards[3] = dealerHand[1];
+
+                Console.WriteLine("Your cards:\n" + playerHand[0].value.ToString() + " of " + playerHand[0].suit + "\n" + playerHand[1].value.ToString() + " of " + playerHand[1].suit);
+
+                double raiseAmount;
+
+                if (askRaise())
+                {
+                    playerBet += raiseQuant(playerBalance, playerBet);
+                    raiseCount++;
+                }
+
+
+                //Create the cards that will be public and add them to the correct arrays
+                Card flop1 = theDeck[rand.Next(theDeck.Length - 1)];
+                while (flop1.isUsed.Equals(true))
+                {
+                    flop1 = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                flop1.isUsed = true;
+                tableCards[4] = flop1;
+                playerHand[2] = flop1;
+                dealerHand[2] = flop1;
+
+                Card flop2 = theDeck[rand.Next(theDeck.Length - 1)];
+                while (flop2.isUsed.Equals(true))
+                {
+                    flop2 = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                flop2.isUsed = true;
+                tableCards[5] = flop2;
+                playerHand[3] = flop2;
+                dealerHand[3] = flop2;
+
+                Card flop3 = theDeck[rand.Next(theDeck.Length - 1)];
+                while (flop3.isUsed.Equals(true))
+                {
+                    flop3 = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                flop3.isUsed = true;
+                tableCards[6] = flop3;
+                playerHand[4] = flop3;
+                dealerHand[4] = flop3;
+
+                Console.WriteLine("\nThe flop!\n" + flop1.value.ToString() + " of " + flop1.suit + "\n" + flop2.value.ToString() + " of " + flop2.suit + "\n" + flop3.value.ToString() + " of " + flop3.suit + "\n");
+
+                if (askRaise())
+                {
+                    playerBet += raiseQuant(playerBalance, playerBet);
+                    raiseCount++;
+                }
+
+                Card turn = theDeck[rand.Next(theDeck.Length - 1)];
+                while (turn.isUsed.Equals(true))
+                {
+                    turn = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                turn.isUsed = true;
+                tableCards[7] = turn;
+                playerHand[5] = turn;
+                dealerHand[5] = turn;
+
+                Console.WriteLine("\nThe turn!\n" + flop1.value.ToString() + " of " + flop1.suit + "\n" + flop2.value.ToString() + " of " + flop2.suit + "\n" + flop3.value.ToString() + " of " + flop3.suit + "\n" + turn.value.ToString() + " of " + turn.suit + "\n");
+
+                if (askRaise())
+                {
+                    playerBet += raiseQuant(playerBalance, playerBet);
+                    raiseCount++;
+                }
+
+                Card river = theDeck[rand.Next(theDeck.Length - 1)];
+                while (river.isUsed.Equals(true))
+                {
+                    river = theDeck[rand.Next(theDeck.Length - 1)];
+                }
+                river.isUsed = true;
+                tableCards[8] = river;
+                playerHand[6] = river;
+                dealerHand[6] = river;
+
+                Console.WriteLine("\nThe river!\n" + flop1.value.ToString() + " of " + flop1.suit + "\n" + flop2.value.ToString() + " of " + flop2.suit + "\n" + turn.value.ToString() + " of " + turn.suit + "\n" + turn.value.ToString() + " of " + turn.suit + "\n" + river.value.ToString() + " of " + river.suit + "\n");
+
+                if (askRaise())
+                {
+                    playerBet += raiseQuant(playerBalance, playerBet);
+                    raiseCount++;
+                }
+
+                int playerScore = playerResult(playerHand, dealerHand);
+                int dealerScore = playerResult(dealerHand, playerHand);
+
+                if(playerScore > dealerScore){
+                    Console.WriteLine("You win! Congratulations!\n");
+                    playerBalance += (playerBet * playerResult(playerHand, dealerHand));
+                }
+                else
+                {
+                    Console.WriteLine("You lose! Bad luck!\n");
+                }
+
+
+
+                //See if player wants to keep playing
+                Console.WriteLine("Would you like to play again?");
+                playAgain = Console.ReadLine();
+
+            }
+
+            Console.WriteLine("Thanks for playing!");
+
+        }
+
+
+
+
+
+
+        /*
+         * 
+         * 
+         *------------------------AREA FOR COMMONLY USED METHODS------------------------
+         * 
+         * 
+         */
+
+
+        //Object that holds card information
+        public class Card
+        {
+            public string suit;
+            public int value;
+            public Boolean isUsed;
+
+            public Card(string suit, int value, Boolean isUsed)
+            {
+                this.suit = suit;
+                this.value = value;
+                this.isUsed = isUsed;
+            }
+
+        }
+
+        //Boolean to determine if the player wants to raise their bet
+        public static Boolean askRaise()
+        {
+            Boolean raise = false;
+
+            Console.WriteLine("Would you like to raise?");
+            string response = Console.ReadLine();
+            if (response.Contains('y'))
+            {
+                raise = true;
+            }
+
+            return raise;
+        }
+
+        //Method to get the quantity the player wants to raise by
+        public static Double raiseQuant(double playerBalance, double currentBet)
+        {
+            Console.WriteLine("How much do you want to raise by?");
+            string stringRaise = Console.ReadLine();
+            double raise;
+            while (!Double.TryParse(stringRaise, out raise))
+            {
+                Console.WriteLine("Not a valid response! Try again! \nAvailable balance: " + playerBalance.ToString());
+                stringRaise = Console.ReadLine();
+            }
+            while (raise > playerBalance)
+            {
+                Console.WriteLine("Not enough tokens! Try again! \nAvailable balance: " + playerBalance.ToString());
+                stringRaise = Console.ReadLine();
+                while (!Double.TryParse(stringRaise, out raise))
+                {
+                    Console.WriteLine("Not a valid response! Try again! \nAvailable balance: " + playerBalance.ToString());
+                    stringRaise = Console.ReadLine();
+                }
+            }
+            return raise;
+        }
+
+        //Figure out what score the player
+        public static int playerResult(Card[] theseCards, Card[] theirCards)
+        {
+            int score = 0;
+            int placer = 0;
+            Card[] noDupe = new Card[5];
+
+            int valDupes = 0;
+            int suitDupes = 0;
+            for (int i = 1; i < theseCards.Length - 1; i++)
+            {
+                if (theseCards[0].value == theseCards[i].value)
+                {
+                    valDupes++;
+                }
+                if (theseCards[0].suit == theseCards[i].suit)
+                {
+                    suitDupes++;
+                }
+                else
+                {
+                    noDupe[placer] = theseCards[i];
+                    placer++;
+                }
+            }
+            //This means no cards on the table are matching and whoever has the high card wins
+            if (valDupes == 0)
+            {
+                if (isStraight(theseCards))
+                {
+                    score = 4;
+                }
+
+                //Score for high card
+                else if ((theseCards[0].value > theirCards[0].value && theseCards[0].value > theirCards[0].value) || (theseCards[1].value > theirCards[0].value && theseCards[1].value > theirCards[0].value))
+                {
+                    score = 1;
+                }
+            }
+
+            //Score for a pair
+            else if (isPair(theseCards))
+            {
+                //Score for two pair
+                if (isPair(noDupe))
+                {
+                    score = 3;
+                }
+                else
+                {
+                    score = 2;
+                }
+            }
+            
+
+            //Score for three of a kind
+            else if (valDupes == 2)
+            {
+                score = 4;
+            }
+
+            //Score for four of a kind
+            else if (valDupes == 3)
+            {
+                score = 7;
+            }
+
+            //Score for a flush
+            if (suitDupes == 4)
+            {
+                score = 5;
+            }
+
+            //Score for a full house
+            if(valDupes == 2 || valDupes == 1)
+            {
+                if(isPair(noDupe) || isThreeOfAKind(noDupe))
+                {
+                    score = 7;
+                } 
+            }
+
+            //Score for a straight flush
+            if (suitDupes == 4 && isStraight(theseCards))
+            {
+                score = 8;
+
+                //Score for a royal flush
+                if (theseCards.Any(card => card.value == 14) && suitDupes == 4)
+                {
+                    score = 9;
+                }
+            }
+
+            return score;
+
+        }
+
+
+
+
+            //Determines if an sorted array has a straight in it
+            public static bool isStraight(Card[] array)
+            {
+                //Sort the array of cards in ascending order by card value
+                array = array.OrderByDescending(card => card.value).Reverse().ToArray();
+                int seqs = 0;
+                for (int i = 1; i < array.Length; i++)
+                {
+                    if (array[i].value != array[i - 1].value + 1) { }
+                    else
+                    {
+                        seqs++;
+                    }
+                }
+                return (seqs >= 5);
+
+            }
+
+            //Determine if a set of cards has a pair
+            public static bool isPair(Card[] cards)
+            {
+                int valDupes = 0;
+                for (int i = 1; i < cards.Length; i++)
+                {
+                    if (cards[0].value == cards[i].value)
+                    {
+                        valDupes++;
+                    }
+                }
+                return (valDupes == 1);
+            }
+
+
+        //Determine if a set of cards has three of a kind
+        public static bool isThreeOfAKind(Card[] cards)
+        {
+            int valDupes = 0;
+            for (int i = 1; i < cards.Length; i++)
+            {
+                if (cards[0].value == cards[i].value)
+                {
+                    valDupes++;
+                }
+            }
+            return (valDupes == 2);
+        }
+
+    }
+    }
